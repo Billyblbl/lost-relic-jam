@@ -1,0 +1,34 @@
+{
+    "name": "Controls.mappings",
+    "maps": [
+        {
+            "name": "Test",
+            "id": "5df488ff-a9ea-4701-acda-5a55ef3fcb5b",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "573053d9-36e6-4b3f-be46-68380296459a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "4e46e0aa-4b34-4bc2-b5e6-c185810c624d",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
