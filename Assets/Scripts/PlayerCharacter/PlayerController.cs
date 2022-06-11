@@ -36,16 +36,30 @@ public class PlayerController : MonoBehaviour
         
     }
 
+    void TurnBaseOnDirection(Vector3 direction)
+    {
+    
+    }
+
     // Update is called once per frame
     void Update()
     {
         var axisValue = inputAction.Player.Move.ReadValue<Vector2>();
 
-        
         var displacement = axisValue * moveSpeed * Time.deltaTime;
-        playerRigibody.MovePosition(playerRigibody.position + new Vector3(displacement.x, 0, displacement.y));
+
+        var newLoc = playerRigibody.position + new Vector3(displacement.x, 0, displacement.y);
+
+        var dir = Vector3.Normalize(playerRigibody.position - newLoc) * -1;
+        var newPLayerDir = Vector3.RotateTowards(transform.forward, dir, 10 * Time.deltaTime, 0.0f);
+
+        transform.rotation = Quaternion.LookRotation(newPLayerDir);
+
+        playerRigibody.MovePosition(newLoc);
+        Debug.DrawLine(transform.position, transform.position + transform.forward * 2, Color.red);
+
         // Debug.LogFormat("axis : {0}  displacement : {1}", axisValue, displacement);
-        
+
     }
 
     public bool TryGrabCable(GrabbableCable cable)
@@ -116,6 +130,7 @@ public class PlayerController : MonoBehaviour
     {
         lastGrab = Time.time;
         grabbedCable = cable;
+        grabbedCable.transform.position = gameObject.transform.TransformPoint(new Vector3(0, 0, -1));
         cableJoint = gameObject.AddComponent<FixedJoint>();
         cableJoint.connectedBody = cable.GetComponent<Rigidbody>();
         grabbedCable.OnGrab(gameObject);
