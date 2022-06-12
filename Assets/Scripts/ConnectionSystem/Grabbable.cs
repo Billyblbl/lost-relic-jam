@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GrabbableCable : MonoBehaviour
+public class Grabbable : MonoBehaviour
 {
     [SerializeField] private Collider managedCollider;
     [SerializeField] public RessourcePort.RessourceType ressType;

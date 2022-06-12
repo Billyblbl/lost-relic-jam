@@ -11,10 +11,10 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     private PlayerInputAction inputAction;
     private Rigidbody playerRigibody;
-    private GrabbableCable grabbedCable = null;
+    private Grabbable grabbedCable = null;
     private FixedJoint cableJoint;
 
-    private List<GrabbableCable> cablesAtRange = new List<GrabbableCable>();
+    private List<Grabbable> cablesAtRange = new List<Grabbable>();
     private List<RessourcePort> portsAtRange = new List<RessourcePort>();
 
     
@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    public bool TryGrabCable(GrabbableCable cable)
+    public bool TryGrabCable(Grabbable cable)
     {
         if (grabbedCable != null  || cable.isGrabbed)
         {
@@ -63,7 +63,7 @@ public class PlayerController : MonoBehaviour
     private void HandleEnterCableTrigger(Collider other)
     {
 
-        var cable = other.GetComponent<GrabbableCable>();
+        var cable = other.GetComponent<Grabbable>();
         if (cable == null)        
             return;
 
@@ -84,7 +84,7 @@ public class PlayerController : MonoBehaviour
     private void HandleExitCableTrigger(Collider other)
     {
 
-        var cable = other.GetComponent<GrabbableCable>();
+        var cable = other.GetComponent<Grabbable>();
         if (cable == null)
             return;
 
@@ -114,7 +114,7 @@ public class PlayerController : MonoBehaviour
         HandleEnterPortTrigger(other);
     }
 
-    private void GrabCable(GrabbableCable cable)
+    private void GrabCable(Grabbable cable)
     {
         grabbedCable = cable;
         grabbedCable.transform.position = gameObject.transform.TransformPoint(new Vector3(0, 0, -1));
@@ -149,11 +149,11 @@ public class PlayerController : MonoBehaviour
         return true;
     }
 
-    private GrabbableCable GetClosetCableAtRange()
+    private Grabbable GetClosetCableAtRange()
     {
         if (cablesAtRange.Count == 0) return null;
 
-        GrabbableCable res = cablesAtRange[0];
+        Grabbable res = cablesAtRange[0];
         float distWithRes = Vector3.Distance(transform.position, res.transform.position);
 
         cablesAtRange.ForEach(it =>

@@ -6,7 +6,7 @@ public class RessourcePort : MonoBehaviour
 {
     public enum RessourceType { COOLANT, ENERGY, FUEL }
 
-    private GrabbableCable connectedCable = null;
+    private Grabbable connectedCable = null;
 		Plug connectedPlug;
     private FixedJoint cableJoint;
 
@@ -22,7 +22,7 @@ public class RessourcePort : MonoBehaviour
 
     public bool CanConnectCable => connectedCable == null;
 
-    public void ConnectCable(GrabbableCable cable)
+    public void ConnectCable(Grabbable cable)
     {
         Debug.Log("connecting cable !");
         connectedCable = cable;
@@ -33,7 +33,7 @@ public class RessourcePort : MonoBehaviour
         connectedPlug = connectedCable.GetComponent<Plug>();
     }
 
-    public GrabbableCable DisconectCable()
+    public Grabbable DisconectCable()
     {
         if (connectedCable == null)
         {
