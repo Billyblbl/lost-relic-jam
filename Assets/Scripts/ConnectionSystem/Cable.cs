@@ -5,9 +5,7 @@ using UnityEngine;
 #nullable enable
 
 public class Cable : MonoBehaviour {
-	// public float length = 1;
 	public int segmentCount = 1;
-	// public float segmentLength = 1f;
 	public float jointOverlaps = 0.1f;
 	public Segment? segmentPrefab;
 	public Plug? endsPrefabs;

@@ -50,8 +50,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  grabRange: {fileID: 0}
-  grabCD: 0.2
+  move: {fileID: 6916434321718098679, guid: fcec3bd9b89acef4bbb1f3003295f9e8, type: 3}
+  grab: {fileID: -4837245575427367029, guid: fcec3bd9b89acef4bbb1f3003295f9e8, type: 3}
 --- !u!54 &-6146252726234522348
 Rigidbody:
   m_ObjectHideFlags: 0
