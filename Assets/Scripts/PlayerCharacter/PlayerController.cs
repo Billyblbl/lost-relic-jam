@@ -36,17 +36,18 @@ public class PlayerController : MonoBehaviour
     {
         var axisValue = inputAction.Player.Move.ReadValue<Vector2>();
 
-        // Calc next player location
         var displacement = axisValue * moveSpeed * Time.deltaTime;
         var newLoc = playerRigibody.position + new Vector3(displacement.x, 0, displacement.y);
-        playerRigibody.MovePosition(newLoc);
 
-        // Calc next player rotation
         var dir = Vector3.Normalize(playerRigibody.position - newLoc) * -1;
         var newPLayerDir = Vector3.RotateTowards(transform.forward, dir, 10 * Time.deltaTime, 0.0f);
         transform.rotation = Quaternion.LookRotation(newPLayerDir);
 
+        playerRigibody.MovePosition(newLoc);
         Debug.DrawLine(transform.position, transform.position + transform.forward * 2, Color.red);
+
+        // Debug.LogFormat("axis : {0}  displacement : {1}", axisValue, displacement);
+
     }
 
     public bool TryGrabCable(GrabbableCable cable)
