@@ -12,12 +12,12 @@
 
 :models
 
-[name:;collection:Blasters;type:attachment_barrel;position:(1.9585, 1.0000, 0.0000);rotation:(0.0000, 0.0000, 180.0000);scale:(0.5000, 0.5000, 1.0000);group:;locked:False;hidden:False;materials:custom6+custom5+dark;]
-[name:;collection:Aircraft;type:engine_turbineLarge%;position:(2.0000, 1.0000, 0.0000);rotation:(0.0000, 0.0000, 0.0000);scale:(1.0000, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:custom6+custom4+custom4;]
-[name:;collection:Blasters;type:attachment_barrel;position:(1.9585, 2.0000, 0.0000);rotation:(0.0000, 0.0000, 0.0000);scale:(0.5000, 0.5000, 1.0000);group:;locked:False;hidden:False;materials:custom6+custom5+dark;]
 [name:;collection:Blasters;type:attachment_barrel;position:(2.0415, 1.0000, -2.0000);rotation:(0.0000, 180.0000, 180.0000);scale:(0.5000, 0.5000, 1.0000);group:;locked:False;hidden:False;materials:custom6+custom5+dark;]
 [name:;collection:Blasters;type:attachment_barrel;position:(2.0415, 2.0000, -2.0000);rotation:(0.0000, 180.0000, 0.0000);scale:(0.5000, 0.5000, 1.0000);group:;locked:False;hidden:False;materials:custom6+custom5+dark;]
 [name:;collection:Blasters;type:attachment_silencer;position:(4.0000, 0.0000, -1.0000);rotation:(0.0000, 0.0000, 0.0000);scale:(1.0000, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:dark+metalDark+_defaultMat;]
 [name:;collection:Blasters;type:attachment_barrelThin;position:(4.0000, 0.0000, 1.0000);rotation:(0.0000, 0.0000, 0.0000);scale:(1.0000, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:dark;]
 [name:;collection:Aircraft;type:engine_turbineLarge%;position:(2.0000, 1.0000, -2.0000);rotation:(0.0000, 180.0000, 0.0000);scale:(1.0000, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:custom6+custom4+custom4;]
 [name:;collection:Blasters;type:clipBarrel_large;position:(2.0000, 1.0000, -1.0280);rotation:(0.0000, 0.0000, 0.0000);scale:(1.0000, 1.0000, 1.0560);group:;locked:False;hidden:False;materials:custom6+custom5;]
+[name:;collection:Blasters;type:attachment_barrel;position:(1.9585, 2.0000, 0.0000);rotation:(0.0000, 0.0000, 0.0000);scale:(0.5000, 0.5000, 1.0000);group:;locked:False;hidden:False;materials:custom6+custom5+dark;]
+[name:;collection:Aircraft;type:engine_turbineLarge%;position:(2.0000, 1.0000, 0.0000);rotation:(0.0000, 0.0000, 0.0000);scale:(1.0000, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:custom6+custom4+custom4;]
+[name:;collection:Blasters;type:attachment_barrel;position:(1.9585, 1.0000, 0.0000);rotation:(0.0000, 0.0000, 180.0000);scale:(0.5000, 0.5000, 1.0000);group:;locked:False;hidden:False;materials:custom6+custom5+dark;]
