@@ -159,7 +159,7 @@ public class PlayerController : MonoBehaviour
             return true;
         }
 
-        if (!portsAtRange[0].CanConnectCable())
+        if (!portsAtRange[0].CanConnectCable)
             return false;
 
         var cableToConnect = grabbedCable;

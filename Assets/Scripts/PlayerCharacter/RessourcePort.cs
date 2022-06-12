@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class RessourcePort : MonoBehaviour
 {
+    public enum RessourceType { COOLANT, ENERGY, FUEL }
+
     private GrabbableCable connectedCable = null;
     private FixedJoint cableJoint;
+
+    [SerializeField] public RessourceType ressType = RessourceType.ENERGY;
+    [SerializeField] private float ejectForce = 10f;
 
     // Start is called before the first frame update
     void Start()
@@ -19,10 +24,14 @@ public class RessourcePort : MonoBehaviour
         
     }
 
-    public bool CanConnectCable()
+    private void OnDrawGizmos()
     {
-        return connectedCable == null;
+        Debug.DrawLine(transform.position, gameObject.transform.TransformPoint(new Vector3(1, 0, 0)), Color.red);
     }
+
+    public bool IsCableConnected => connectedCable != null;
+
+    public bool CanConnectCable => connectedCable == null;
 
     public void ConnectCable(GrabbableCable cable)
     {
@@ -51,6 +60,10 @@ public class RessourcePort : MonoBehaviour
 
     public void EjectCable()
     {
+        var cable = DisconectCable();
+        var ejectDir = Vector3.Normalize(transform.position - gameObject.transform.TransformPoint(new Vector3(1, 0, 0))) * -1;
+        
 
+        cable.GetComponent<Rigidbody>().AddForce(ejectDir * ejectForce, ForceMode.Impulse);
     }
 }
