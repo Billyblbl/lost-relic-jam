@@ -48,7 +48,7 @@ MonoBehaviour:
   jointOverlaps: 0.05
   segmentPrefab: {fileID: 1924565346904819748, guid: 20faa475fe959394c8447932b25d3125,
     type: 3}
-  endsPrefabs: {fileID: 4946724754490291391, guid: abcbc861b092abe47ab3da48809bd8c8,
+  endsPrefabs: {fileID: 1906242986687333859, guid: abcbc861b092abe47ab3da48809bd8c8,
     type: 3}
   ends: []
   generate: 1

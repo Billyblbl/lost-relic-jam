@@ -7,22 +7,11 @@ public class RessourcePort : MonoBehaviour
     public enum RessourceType { COOLANT, ENERGY, FUEL }
 
     private GrabbableCable connectedCable = null;
+		Plug connectedPlug;
     private FixedJoint cableJoint;
 
     [SerializeField] public RessourceType ressType = RessourceType.ENERGY;
     [SerializeField] private float ejectForce = 10f;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private void OnDrawGizmos()
     {
@@ -35,12 +24,13 @@ public class RessourcePort : MonoBehaviour
 
     public void ConnectCable(GrabbableCable cable)
     {
-        Debug.Log("connecting cable !"); 
+        Debug.Log("connecting cable !");
         connectedCable = cable;
         connectedCable.transform.position = gameObject.transform.TransformPoint(new Vector3(1, 0, 0));
         cableJoint = gameObject.AddComponent<FixedJoint>();
         cableJoint.connectedBody = cable.GetComponent<Rigidbody>();
         connectedCable.OnGrab(gameObject);
+        connectedPlug = connectedCable.GetComponent<Plug>();
     }
 
     public GrabbableCable DisconectCable()
@@ -54,6 +44,7 @@ public class RessourcePort : MonoBehaviour
         connectedCable.OnDrop(gameObject);
         Destroy(cableJoint);
         connectedCable = null;
+        connectedPlug = null;
 
         return disconectedCable;
     }
@@ -62,8 +53,6 @@ public class RessourcePort : MonoBehaviour
     {
         var cable = DisconectCable();
         var ejectDir = Vector3.Normalize(transform.position - gameObject.transform.TransformPoint(new Vector3(1, 0, 0))) * -1;
-        
-
         cable.GetComponent<Rigidbody>().AddForce(ejectDir * ejectForce, ForceMode.Impulse);
     }
 }

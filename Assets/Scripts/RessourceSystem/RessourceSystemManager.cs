@@ -25,10 +25,10 @@ public class RessourceSystemManager : MonoBehaviour
     {
      
         // test event
-        if (Random.Range(0, 100) <= 0.000001)
-        {
-            DoPerformanceTest(ShipSystemType.SHIELD, 1, 10, 10);
-        }
+        // if (Random.Range(0, 100) <= 0.000001)
+        // {
+        //     DoPerformanceTest(ShipSystemType.SHIELD, 1, 10, 10);
+        // }
     }
 
     private ShipSystem GetSystemByType(ShipSystemType sstype)
@@ -68,5 +68,3 @@ public class RessourceSystemManager : MonoBehaviour
         targetedSystem.InflictStress(stressPenalty * stressCoef);
     }
 }
-
-    

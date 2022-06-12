@@ -11,4 +11,5 @@ public class Plug : MonoBehaviour {
 		System
 	}
 	public PlugStatus plugStatus;
+	public Cable? cable;
 }

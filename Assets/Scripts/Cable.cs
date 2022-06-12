@@ -46,6 +46,9 @@ public class Cable : MonoBehaviour {
 			plugs[0].joint!.connectedBody = extremities[0];
 			plugs[1].joint!.connectedBody = extremities[1];
 
+			plugs[0].cable = this;
+			plugs[1].cable = this;
+
 			ends.AddRange(plugs);
 		}
 
