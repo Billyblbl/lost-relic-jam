@@ -5,6 +5,8 @@ using UnityEngine;
 public class GrabbableCable : MonoBehaviour
 {
     [SerializeField] private Collider managedCollider;
+    [SerializeField] public RessourcePort.RessourceType ressType;
+
 
     public bool isGrabbed = false;
 

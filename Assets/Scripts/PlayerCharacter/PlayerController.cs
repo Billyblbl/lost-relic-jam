@@ -6,17 +6,13 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 1.0f;
-    [SerializeField] private CapsuleCollider grabRange;
-    [SerializeField] private float grabCD = 0.2f; 
 
 
     // Start is called before the first frame update
     private PlayerInputAction inputAction;
     private Rigidbody playerRigibody;
     private GrabbableCable grabbedCable = null;
-    private CapsuleCollider playerCollider;
     private FixedJoint cableJoint;
-    private float lastGrab = 0f;
 
     private List<GrabbableCable> cablesAtRange = new List<GrabbableCable>();
     private List<RessourcePort> portsAtRange = new List<RessourcePort>();
@@ -25,7 +21,6 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         playerRigibody = GetComponent<Rigidbody>();
-        playerCollider = GetComponent<CapsuleCollider>();
 
         inputAction = new PlayerInputAction();
         inputAction.Enable();
@@ -34,11 +29,6 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         
-    }
-
-    void TurnBaseOnDirection(Vector3 direction)
-    {
-    
     }
 
     // Update is called once per frame
@@ -128,23 +118,12 @@ public class PlayerController : MonoBehaviour
 
     private void GrabCable(GrabbableCable cable)
     {
-        lastGrab = Time.time;
         grabbedCable = cable;
         grabbedCable.transform.position = gameObject.transform.TransformPoint(new Vector3(0, 0, -1));
         cableJoint = gameObject.AddComponent<FixedJoint>();
         cableJoint.connectedBody = cable.GetComponent<Rigidbody>();
         grabbedCable.OnGrab(gameObject);
         Debug.Log("Cable grabbed");
-    }
-
-    private bool TryDropCable()
-    {
-        if (grabbedCable == null || grabCD + lastGrab > Time.time)
-        {
-            return false;
-        }
-        DropCable();
-        return true;
     }
 
     private bool HandlePortAction()
@@ -154,18 +133,84 @@ public class PlayerController : MonoBehaviour
 
         if (grabbedCable == null)
         {
-            var cable = portsAtRange[0].DisconectCable();
-            if (cable != null) GrabCable(cable);
+            var filledPort = GetClosetFilledPortAtRange();
+            if (filledPort == null) return false;
+            var cable = filledPort.DisconectCable();
+            if (cable == null) return false;
+            GrabCable(cable);
             return true;
         }
 
-        if (!portsAtRange[0].CanConnectCable)
+        var port = GetClosetAvailablePortAtRangeOfType(grabbedCable.ressType);
+        Debug.LogFormat("Port: {0}", port == null);
+        if (port == null)
             return false;
 
         var cableToConnect = grabbedCable;
         DropCable();
-        portsAtRange[0].ConnectCable(cableToConnect);
+        port.ConnectCable(cableToConnect);
         return true;
+    }
+
+    private GrabbableCable GetClosetCableAtRange()
+    {
+        if (cablesAtRange.Count == 0) return null;
+
+        GrabbableCable res = cablesAtRange[0];
+        float distWithRes = Vector3.Distance(transform.position, res.transform.position);
+
+        cablesAtRange.ForEach(it =>
+        {
+            var distWithIt = Vector3.Distance(transform.position, it.transform.position);
+            if (distWithIt < distWithRes)
+            {
+                res = it;
+                distWithRes = distWithIt;
+            }
+        });
+
+        return res;
+    }
+
+    private RessourcePort GetClosetFilledPortAtRange()
+    {
+        if (portsAtRange.Count == 0) return null;
+
+        RessourcePort res = null;
+        float distWithRes = float.MaxValue;
+
+        portsAtRange.ForEach(it =>
+        {
+            var distWithIt = Vector3.Distance(transform.position, it.transform.position);
+            if (distWithIt < distWithRes && it.IsCableConnected)
+            {
+                res = it;
+                distWithRes = distWithIt;
+            }
+        });
+
+        return res;
+    }
+
+
+    private RessourcePort GetClosetAvailablePortAtRangeOfType(RessourcePort.RessourceType expRessType)
+    {
+        if (portsAtRange.Count == 0) return null;
+
+        RessourcePort res = null;
+        float distWithRes = float.MaxValue;
+
+        portsAtRange.ForEach(it =>
+        {
+            var distWithIt = Vector3.Distance(transform.position, it.transform.position);
+            if (distWithIt < distWithRes && it.ressType == expRessType && it.CanConnectCable)
+            {
+                res = it;
+                distWithRes = distWithIt;
+            }
+        });
+
+        return res;
     }
 
     private bool HandleCableAction()
@@ -180,18 +225,21 @@ public class PlayerController : MonoBehaviour
             return false;
 
 
-        return TryGrabCable(cablesAtRange[0]); ;
+        return TryGrabCable(GetClosetCableAtRange()) ;
     }
 
     private void HandleGrabAction(InputAction.CallbackContext ctx)
     {
-        if (HandlePortAction()) return;
+        if (HandlePortAction())
+        {
+            Debug.LogFormat("Port action handled!");
+            return;
+        }
         HandleCableAction();
     }
 
     private void DropCable()
     {
-        lastGrab = Time.time;
         grabbedCable.OnDrop(gameObject);
         Destroy(cableJoint);
         grabbedCable = null;

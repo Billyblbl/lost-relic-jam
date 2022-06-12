@@ -31,7 +31,7 @@ public class ShipSystem : MonoBehaviour
         {
             Debug.Log("Will Reduce stress !");
             InflictStress(baseStressReduction * CalcPerformanceLevel() * -1);
-            Debug.LogFormat("New Stress: {0} perf level : {1}", stress, CalcPerformanceLevel());
+            //Debug.LogFormat("New Stress: {0} perf level : {1}", stress, CalcPerformanceLevel());
         }
 
         if (ShouldEjectCable())
@@ -115,6 +115,6 @@ public class ShipSystem : MonoBehaviour
     public void InflictStress(float stressDmg)
     {
         stress = Mathf.Clamp(stress + stressDmg, 0, maxStress);
-        Debug.LogFormat("Stress dmg: {0}; new stress {1}", stressDmg, stress);
+       // Debug.LogFormat("Stress dmg: {0}; new stress {1}", stressDmg, stress);
     }
 }

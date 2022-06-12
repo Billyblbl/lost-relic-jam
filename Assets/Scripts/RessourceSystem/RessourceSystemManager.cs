@@ -51,6 +51,11 @@ public class RessourceSystemManager : MonoBehaviour
         return res;
     }
 
+    public void InflictDamage(float dmg)
+    {
+        hp -= Mathf.Clamp(dmg, 0, maxHP);
+    }
+
     public void DoPerformanceTest(ShipSystemType ssType, float expectedPerformance, float hpPenalty, float stressPenalty)
     {
         var targetedSystem = GetSystemByType(ssType);
@@ -59,7 +64,7 @@ public class RessourceSystemManager : MonoBehaviour
         var hpCoef = Mathf.Clamp(expectedPerformance - targetSystemPerf / expectedPerformance, 0, 1);
         var stressCoef = Mathf.Clamp((expectedPerformance * 2) - targetSystemPerf / (expectedPerformance * 2), 0, 1);
 
-        hp -= hpPenalty * hpCoef;
+        InflictDamage(hpPenalty * hpCoef);
         targetedSystem.InflictStress(stressPenalty * stressCoef);
     }
 }
