@@ -7,16 +7,18 @@ using UnityEditor;
 using UnityEditor.IMGUI.Controls;
 #endif
 
+#nullable enable
+
 public class RessourcePort : MonoBehaviour {
 	public enum RessourceType { COOLANT, ENERGY, FUEL }
 
-	private Grabbable connectedCable = null;
-	Plug connectedPlug;
-	public FixedJoint cableJoint;
+	private Grabbable? connectedCable = null;
+	Plug? connectedPlug;
+	public FixedJoint? cableJoint;
 	[SerializeField] public RessourceType ressType = RessourceType.ENERGY;
 	[SerializeField] private float ejectForce = 10f;
 
-	public Transform plugTransform;
+	public Transform? plugTransform;
 
 	public Vector3 ejectionDirection = Vector3.right;
 	public Cone ejectionRandomDeviation;
@@ -32,20 +34,20 @@ public class RessourcePort : MonoBehaviour {
 	public void ConnectCable(Grabbable cable) {
 		Debug.Log("connecting cable !");
 		connectedCable = cable;
-		connectedCable.transform.position = plugTransform.position;
-		connectedCable.transform.rotation = plugTransform.rotation;
-		connectedCable.transform.localScale = plugTransform.localScale;
-		cableJoint.connectedBody = cable.GetComponent<Rigidbody>();
+		connectedCable.transform.position = plugTransform?.position ?? transform.position;
+		connectedCable.transform.rotation = plugTransform?.rotation ?? transform.rotation;
+		connectedCable.transform.localScale = plugTransform?.localScale ?? transform.localScale;
+		cableJoint!.connectedBody = cable.GetComponent<Rigidbody>();
 		connectedCable.OnGrab(gameObject);
 		connectedPlug = connectedCable.GetComponent<Plug>();
 	}
 
-	public Grabbable DisconectCable() {
+	public Grabbable? DisconectCable() {
 		if (connectedCable == null) return null;
 		Debug.Log("disconnecting cable !");
 		var disconectedCable = connectedCable;
 		connectedCable.OnDrop(gameObject);
-		cableJoint.connectedBody = null;
+		cableJoint!.connectedBody = null;
 		connectedCable = null;
 		connectedPlug = null;
 
@@ -59,9 +61,9 @@ public class RessourcePort : MonoBehaviour {
 		var deviation = Quaternion.Euler(deviationAngles);
 		var ejection = Quaternion.LookRotation(ejectionDirection, Vector3.up);
 		var deviatedEjection = deviation * ejection * Vector3.forward;
-		var ejectDir = plugTransform.TransformVector(deviatedEjection);
+		var ejectDir = plugTransform?.TransformVector(deviatedEjection) ?? transform.TransformVector(deviatedEjection);
 
-		cable.GetComponent<Rigidbody>().AddForce(ejectDir * ejectForce, ForceMode.Impulse);
+		cable?.GetComponent<Rigidbody>().AddForce(ejectDir * ejectForce, ForceMode.Impulse);
 	}
 
 }
@@ -74,9 +76,9 @@ public class RessourcePortEditor : Editor {
 	ArcHandle arc = new();
 
 	private void OnSceneGUI() {
-		var t = target as RessourcePort;
+		var t = (target as RessourcePort)!;
 
-		var newDir = Handles.RotationHandle(Quaternion.LookRotation(t.plugTransform.TransformDirection(t.ejectionDirection), Vector3.up), t.plugTransform.position);
+		var newDir = Handles.RotationHandle(Quaternion.LookRotation(t.plugTransform!.TransformDirection(t.ejectionDirection), Vector3.up), t.plugTransform.position);
 		t.ejectionDirection = t.plugTransform.InverseTransformVector(newDir * Vector3.forward);
 		t.ejectionRandomDeviation.DrawHandle(arc, t.plugTransform.position, newDir);
 	}

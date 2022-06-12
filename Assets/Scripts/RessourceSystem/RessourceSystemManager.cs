@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+#nullable enable
+
 public class RessourceSystemManager : MonoBehaviour {
 	public enum ShipSystemType { SHIELD, ENGINE, WEAPONS };
 
-	[SerializeField] private ShipSystem shield;
-	[SerializeField] private ShipSystem engine;
-	[SerializeField] private ShipSystem weapons;
+	[SerializeField] private ShipSystem? shield;
+	[SerializeField] private ShipSystem? engine;
+	[SerializeField] private ShipSystem? weapons;
 	[SerializeField] private float maxHP = 100;
 
 	[SerializeField] private float hp = 0;
@@ -21,13 +23,13 @@ public class RessourceSystemManager : MonoBehaviour {
 
 		switch (sstype) {
 			case ShipSystemType.SHIELD:
-				res = shield;
+				res = shield!;
 				break;
 			case ShipSystemType.ENGINE:
-				res = engine;
+				res = engine!;
 				break;
 			default:
-				res = weapons;
+				res = weapons!;
 				break;
 		}
 

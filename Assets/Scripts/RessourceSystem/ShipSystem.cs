@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+#nullable enable
+
 public class ShipSystem : MonoBehaviour {
 	[SerializeField] private float maxStress = 100f;
 	[SerializeField] private float stressEjectBaseChance = 30f;
@@ -9,7 +11,7 @@ public class ShipSystem : MonoBehaviour {
 	[SerializeField] private float stressEjectTimeoutSec = 2f;
 	[SerializeField] private float baseStressReduction = 5f;
 	[SerializeField] private float stressReductionTimeout = 1f;
-	[SerializeField] private List<RessourcePort> ports;
+	[SerializeField] private List<RessourcePort> ports = new();
 	[SerializeField] private Vector3 perfRequierement = new Vector3(1, 1, 1); // X => COOLANT; Y => ENERGY; Z => FUEL
 
 
@@ -38,7 +40,7 @@ public class ShipSystem : MonoBehaviour {
 		return true;
 	}
 
-	RessourcePort EjectCableFromRandomPort() {
+	RessourcePort? EjectCableFromRandomPort() {
 		var filledPorts = new List<RessourcePort>();
 		ports.ForEach(it => {
 			if (it.IsCableConnected)

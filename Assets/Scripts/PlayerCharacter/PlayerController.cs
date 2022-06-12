@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+#nullable enable
+
 public class PlayerController : MonoBehaviour {
 	[SerializeField] private float moveSpeed = 1.0f;
 
-	public InputActionReference move;
-	public InputActionReference grab;
+	public InputActionReference? move;
+	public InputActionReference? grab;
 
-	private Rigidbody playerRigibody;
-	private Grabbable grabbedCable = null;
-	private FixedJoint cableJoint;
+	private Rigidbody? playerRigibody;
+	private Grabbable? grabbedCable;
+	private FixedJoint? cableJoint;
 
 	private List<Grabbable> cablesAtRange = new List<Grabbable>();
 	private List<RessourcePort> portsAtRange = new List<RessourcePort>();
@@ -20,14 +22,14 @@ public class PlayerController : MonoBehaviour {
 
 	private void Awake() {
 		playerRigibody = GetComponent<Rigidbody>();
-		grab.action.performed += HandleGrabAction;
+		grab!.action.performed += HandleGrabAction;
 	}
 
 	void Update() {
-		var axisValue = move.action.ReadValue<Vector2>();
+		var axisValue = move!.action.ReadValue<Vector2>();
 
 		var displacement = axisValue * moveSpeed * Time.deltaTime;
-		var newLoc = playerRigibody.position + new Vector3(displacement.x, 0, displacement.y);
+		var newLoc = playerRigibody!.position + new Vector3(displacement.x, 0, displacement.y);
 
 		var dir = -Vector3.Normalize(playerRigibody.position - newLoc);
 		var newPLayerDir = Vector3.RotateTowards(transform.forward, dir, turnSpeed * Time.deltaTime, 0.0f);
@@ -98,7 +100,7 @@ public class PlayerController : MonoBehaviour {
 		return true;
 	}
 
-	private Grabbable GetClosetCableAtRange() {
+	private Grabbable? GetClosetCableAtRange() {
 		if (cablesAtRange.Count == 0) return null;
 
 		Grabbable res = cablesAtRange[0];
@@ -115,10 +117,10 @@ public class PlayerController : MonoBehaviour {
 		return res;
 	}
 
-	private RessourcePort GetClosetFilledPortAtRange() {
+	private RessourcePort? GetClosetFilledPortAtRange() {
 		if (portsAtRange.Count == 0) return null;
 
-		RessourcePort res = null;
+		RessourcePort? res = null;
 		float distWithRes = float.MaxValue;
 
 		portsAtRange.ForEach(it => {
@@ -133,10 +135,10 @@ public class PlayerController : MonoBehaviour {
 	}
 
 
-	private RessourcePort GetClosetAvailablePortAtRangeOfType(RessourcePort.RessourceType expRessType) {
+	private RessourcePort? GetClosetAvailablePortAtRangeOfType(RessourcePort.RessourceType expRessType) {
 		if (portsAtRange.Count == 0) return null;
 
-		RessourcePort res = null;
+		RessourcePort? res = null;
 		float distWithRes = float.MaxValue;
 
 		portsAtRange.ForEach(it => {
@@ -159,7 +161,7 @@ public class PlayerController : MonoBehaviour {
 		if (cablesAtRange.Count == 0)
 			return false;
 
-		return TryGrabCable(GetClosetCableAtRange());
+		return TryGrabCable(GetClosetCableAtRange()!);
 	}
 
 	private void HandleGrabAction(InputAction.CallbackContext ctx) {
@@ -168,7 +170,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	private void DropCable() {
-		grabbedCable.OnDrop(gameObject);
+		grabbedCable?.OnDrop(gameObject);
 		Destroy(cableJoint);
 		grabbedCable = null;
 		Debug.Log("Cable Dropped");

@@ -1,18 +1,20 @@
 using UnityEngine;
 
+#nullable enable
+
 public class Grabbable : MonoBehaviour {
-	[SerializeField] private Collider managedCollider;
+	[SerializeField] private Collider? managedCollider;
 	[SerializeField] public RessourcePort.RessourceType ressType;
 
 	public bool isGrabbed = false;
 
 	public void OnGrab(GameObject grabber) {
-		managedCollider.enabled = false;
+		if (managedCollider != null) managedCollider.enabled = false;
 		isGrabbed = true;
 	}
 
 	public void OnDrop(GameObject grabber) {
-		managedCollider.enabled = true;
+		if (managedCollider != null) managedCollider.enabled = true;
 		isGrabbed = false;
 	}
 }
