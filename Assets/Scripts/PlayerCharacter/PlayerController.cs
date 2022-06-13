@@ -90,6 +90,7 @@ public class PlayerController : MonoBehaviour {
 			return true;
 		}
 
+		if (grabbedCable.ressType == null) return false;
 		var port = GetClosetAvailablePortAtRangeOfType(grabbedCable.ressType);
 		if (port == null)
 			return false;
@@ -135,7 +136,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 
-	private RessourcePort? GetClosetAvailablePortAtRangeOfType(RessourcePort.RessourceType expRessType) {
+	private RessourcePort? GetClosetAvailablePortAtRangeOfType(Ressource expRessType) {
 		if (portsAtRange.Count == 0) return null;
 
 		RessourcePort? res = null;

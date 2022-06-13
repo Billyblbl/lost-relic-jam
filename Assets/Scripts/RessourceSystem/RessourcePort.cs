@@ -10,12 +10,11 @@ using UnityEditor.IMGUI.Controls;
 #nullable enable
 
 public class RessourcePort : MonoBehaviour {
-	public enum RessourceType { COOLANT, ENERGY, FUEL }
 
 	private Grabbable? connectedCable = null;
 	Plug? connectedPlug;
 	public FixedJoint? cableJoint;
-	[SerializeField] public RessourceType ressType = RessourceType.ENERGY;
+	[SerializeField] public Ressource? ressType;
 	[SerializeField] private float ejectForce = 10f;
 
 	public Transform? plugTransform;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Grabbable : MonoBehaviour {
 	[SerializeField] private Collider? managedCollider;
-	[SerializeField] public RessourcePort.RessourceType ressType;
+	[SerializeField] public Ressource? ressType;
 
 	public bool isGrabbed = false;
 

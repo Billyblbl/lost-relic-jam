@@ -149,6 +149,7 @@ MonoBehaviour:
   rb: {fileID: 3721872575954510997}
   joint: {fileID: 4946724754490291391}
   plugStatus: 0
+  cable: {fileID: 0}
 --- !u!114 &8379519933828093066
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,7 +163,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   managedCollider: {fileID: 1171506058604229246}
-  ressType: 0
+  ressType: {fileID: 11400000, guid: 541f5c7c7cf7e354d812af579ce04fcf, type: 2}
   isGrabbed: 0
 --- !u!135 &1171506058604229246
 SphereCollider:
