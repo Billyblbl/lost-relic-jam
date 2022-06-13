@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 #nullable enable
 
@@ -63,27 +64,18 @@ public class ShipSystem : MonoBehaviour {
 		return Random.Range(0, 100) < stressEjectBaseChance;
 	}
 
-	Vector3 CalcSystemRessources() {
-		var systemRessources = new Vector3(0, 0, 0);
-		ports.ForEach(it => {
-			switch (it.ressType) {
-				case RessourcePort.RessourceType.COOLANT:
-					systemRessources.x += it.IsCableConnected ? 1 : 0;
-					break;
-				case RessourcePort.RessourceType.ENERGY:
-					systemRessources.y += it.IsCableConnected ? 1 : 0;
-					break;
-				case RessourcePort.RessourceType.FUEL:
-					systemRessources.z += it.IsCableConnected ? 1 : 0;
-					break;
-			};
-		});
-		return systemRessources;
-	}
+	Vector3Int CalcSystemRessources() => ports
+		.Select(p => p.ressType?.unit ?? Vector3Int.zero)
+		.Aggregate(Vector3Int.zero, (u1, u2) => u1 + u2);
 
+	// TODO check with alex for this calculation
 	public float CalcPerformanceLevel() {
 		var systemRessources = CalcSystemRessources();
-		return ((systemRessources.x / perfRequierement.x) + (systemRessources.y / perfRequierement.y) + (systemRessources.z / perfRequierement.z)) / 3;
+		return (
+			(systemRessources.x / perfRequierement.x) +
+			(systemRessources.y / perfRequierement.y) +
+			(systemRessources.z / perfRequierement.z)
+		) / 3;
 	}
 
 	public void InflictStress(float stressDmg) {

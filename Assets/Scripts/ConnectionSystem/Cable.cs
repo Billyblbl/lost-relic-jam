@@ -7,18 +7,17 @@ using UnityEngine;
 public class Cable : MonoBehaviour {
 	public int segmentCount = 1;
 	public float jointOverlaps = 0.1f;
-	public Segment? segmentPrefab;
-	public Plug? endsPrefabs;
+	public Ressource? ressource;
 	public List<Plug> ends = new();
-	public bool generate = true;
+	public bool generate = false;
 	public List<Segment?> links = new();
 
 	public List<Segment?> Generate() {
 		links = new();
-		if (segmentPrefab != null) for (int i = 0; i < segmentCount; i++) {
-			var newLink = Instantiate(segmentPrefab, transform.position, transform.rotation);
+		if (ressource?.cableSegmentPrefab != null) for (int i = 0; i < segmentCount; i++) {
+			var newLink = Instantiate(ressource.cableSegmentPrefab, transform.position, transform.rotation);
 			newLink.transform.parent = transform;
-			newLink.transform.localScale = segmentPrefab.transform.localScale;
+			newLink.transform.localScale = ressource.cableSegmentPrefab.transform.localScale;
 			newLink.gameObject.SetActive(true);
 			if (i > 0) {
 				var prev = links[i - 1];
@@ -31,14 +30,14 @@ public class Cable : MonoBehaviour {
 		}
 
 		//Generate ends
-		if (endsPrefabs != null && links.Count > 0) {
+		if (ressource?.cableEndPrefab != null && links.Count > 0) {
 			var extremities = new Rigidbody[2] {
 				links[0]?.extremities[0]!,
 				links[links.Count-1]?.extremities[(links[links.Count-1]?.extremities.Length ?? 1) - 1]!
 			};
 			var plugs = new Plug[2] {
-				Instantiate(endsPrefabs, extremities[0]?.transform.position ?? Vector3.zero, extremities[0]?.transform.rotation ?? Quaternion.identity, transform),
-				Instantiate(endsPrefabs, extremities[1]?.transform.position ?? Vector3.zero, Quaternion.Euler(180f, 0f, 0f) * (extremities[0]?.transform.rotation ?? Quaternion.identity), transform)
+				Instantiate(ressource.cableEndPrefab, extremities[0]?.transform.position ?? Vector3.zero, extremities[0]?.transform.rotation ?? Quaternion.identity, transform),
+				Instantiate(ressource.cableEndPrefab, extremities[1]?.transform.position ?? Vector3.zero, Quaternion.Euler(180f, 0f, 0f) * (extremities[0]?.transform.rotation ?? Quaternion.identity), transform)
 			};
 
 			plugs[0].joint!.connectedBody = extremities[0];
@@ -54,6 +53,7 @@ public class Cable : MonoBehaviour {
 	}
 
 	public void PlaceLinks() {
+		var segmentPrefab = ressource?.cableSegmentPrefab;
 		var nextDirection = segmentPrefab?.extremities[1].transform.position - segmentPrefab?.extremities[0].transform.position ?? Vector3.down;
 		nextDirection -= nextDirection * jointOverlaps;
 		for (int i = 0; i < links.Count; i++) {
