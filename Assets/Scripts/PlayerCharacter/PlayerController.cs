@@ -20,26 +20,68 @@ public class PlayerController : MonoBehaviour {
 
 	public float turnSpeed = 10f;
 
+	private float  cableStartTime = 0f;
+	public float   cableConnectTime = 0.5f;
+	public float   cableConnectSpeed = 20f;
+	public float   cableConnectDistance = 0.1f;
+	public Vector3 cableLocalConnectionPoint = new Vector3(0, 0, -1);
+	
+
 	private void Awake() {
 		playerRigibody = GetComponent<Rigidbody>();
 		grab!.action.performed += HandleGrabAction;
+		//cableJoint = GetComponent<FixedJoint>();
 	}
 
-	void Update() {
+    private void OnDrawGizmosSelected()
+    {
+		Gizmos.color = Color.green;
+		Gizmos.DrawSphere(transform.TransformPoint(cableLocalConnectionPoint), 0.2f);
+    }
+
+    void Update() {
+
+		UpdatePlayerLocation();
+		UpdateCableConnection();
+	}
+
+	private Vector3 cableConnectionPoint => gameObject.transform.TransformPoint(cableLocalConnectionPoint);
+
+	private void UpdatePlayerLocation()
+    {
 		var axisValue = move!.action.ReadValue<Vector2>();
 
-		var displacement = axisValue * moveSpeed * Time.deltaTime;
+		var displacement = axisValue * moveSpeed;
 		var newLoc = playerRigibody!.position + new Vector3(displacement.x, 0, displacement.y);
+		var prevVel = Vector3.Scale(playerRigibody.velocity, Vector3.up);
+		playerRigibody.velocity = new Vector3(displacement.x, 0, displacement.y) + prevVel;
 
 		var dir = -Vector3.Normalize(playerRigibody.position - newLoc);
 		var newPLayerDir = Vector3.RotateTowards(transform.forward, dir, turnSpeed * Time.deltaTime, 0.0f);
 		transform.rotation = Quaternion.LookRotation(newPLayerDir);
 
-		playerRigibody.MovePosition(newLoc);
 		Debug.DrawLine(transform.position, transform.position + transform.forward * 2, Color.red);
-
 	}
 
+	private void UpdateCableConnection()
+    {
+		if (grabbedCable == null || cableJoint != null)
+			return;
+
+		var cableRigibody = grabbedCable.GetComponent<Rigidbody>();
+		var cableDistance = Vector3.Distance(grabbedCable.transform.position, cableConnectionPoint);
+		if (cableDistance < cableConnectDistance)
+		{
+			cableJoint = gameObject.AddComponent<FixedJoint>();
+			cableJoint.connectedBody = cableRigibody;
+			return;
+		}
+
+		var nextPos = Vector3.Lerp(grabbedCable.transform.position, cableConnectionPoint, (Time.time - cableStartTime) / cableConnectTime);
+		var nextVel = Vector3.Normalize(nextPos - cableRigibody.position);
+		cableRigibody.velocity = nextVel * cableConnectSpeed;
+		
+	}
 	public bool TryGrabCable(Grabbable cable) {
 		if (grabbedCable != null || cable.isGrabbed) return false;
 		GrabCable(cable);
@@ -70,10 +112,13 @@ public class PlayerController : MonoBehaviour {
 
 	private void GrabCable(Grabbable cable) {
 		grabbedCable = cable;
-		grabbedCable.transform.position = gameObject.transform.TransformPoint(new Vector3(0, 0, -1));
-		cableJoint = gameObject.AddComponent<FixedJoint>();
-		cableJoint.connectedBody = cable.GetComponent<Rigidbody>();
+
 		grabbedCable.OnGrab(gameObject);
+		cablesAtRange.Remove(grabbedCable); 
+		cableStartTime = Time.time;
+	
+		grabbedCable.GetComponent<Rigidbody>().position = cableConnectionPoint;
+
 		Debug.Log("Cable grabbed");
 	}
 
@@ -173,6 +218,7 @@ public class PlayerController : MonoBehaviour {
 		grabbedCable?.OnDrop(gameObject);
 		Destroy(cableJoint);
 		grabbedCable = null;
+		cableJoint = null;
 		Debug.Log("Cable Dropped");
 	}
 }

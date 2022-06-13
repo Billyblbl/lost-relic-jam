@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2046360971653891508}
   - component: {fileID: 8962140308804508618}
   - component: {fileID: 1965582088}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -52,6 +52,11 @@ MonoBehaviour:
   moveSpeed: 5
   move: {fileID: 6916434321718098679, guid: fcec3bd9b89acef4bbb1f3003295f9e8, type: 3}
   grab: {fileID: -4837245575427367029, guid: fcec3bd9b89acef4bbb1f3003295f9e8, type: 3}
+  turnSpeed: 10
+  cableConnectTime: 0.5
+  cableConnectSpeed: 20
+  cableConnectDistance: 0.1
+  cableLocalConnectionPoint: {x: 0, y: 0, z: -1}
 --- !u!54 &-6146252726234522348
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -197,7 +202,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
