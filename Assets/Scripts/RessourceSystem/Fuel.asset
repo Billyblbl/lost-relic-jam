@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: Fuel
   m_EditorClassIdentifier: 
   unit: {x: 0, y: 1, z: 0}
-  cableSegmentPrefab: {fileID: 0}
-  cableEndPrefab: {fileID: 0}
+  cableSegmentPrefab: {fileID: 6799241081723359504, guid: 78853d46ab737c443ad066e2cc8bab66,
+    type: 3}
+  cableEndPrefab: {fileID: 1906242986687333859, guid: cda5ae153de2cd346a70923060efe6a0,
+    type: 3}

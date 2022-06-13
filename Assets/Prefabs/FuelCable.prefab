@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5962308393441340323}
   - component: {fileID: 5962308393441340252}
   m_Layer: 0
-  m_Name: CoolantCable
+  m_Name: FuelCable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   segmentCount: 0
   jointOverlaps: 0.05
-  ressource: {fileID: 11400000, guid: 541f5c7c7cf7e354d812af579ce04fcf, type: 2}
+  ressource: {fileID: 11400000, guid: d27abf2dd5a40a042b1a0a0a56c3b541, type: 2}
   ends: []
   generate: 0
   links: []
