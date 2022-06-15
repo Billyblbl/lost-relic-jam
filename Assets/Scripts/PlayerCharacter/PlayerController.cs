@@ -20,12 +20,12 @@ public class PlayerController : MonoBehaviour {
 
 	public float turnSpeed = 10f;
 
-	private float  cableStartTime = 0f;
-	public float   cableConnectTime = 0.5f;
-	public float   cableConnectSpeed = 20f;
-	public float   cableConnectDistance = 0.1f;
+	private float cableStartTime = 0f;
+	public float cableConnectTime = 0.5f;
+	public float cableConnectSpeed = 20f;
+	public float cableConnectDistance = 0.1f;
 	public Vector3 cableLocalConnectionPoint = new Vector3(0, 0, -1);
-	
+
 
 	private void Awake() {
 		playerRigibody = GetComponent<Rigidbody>();
@@ -33,22 +33,19 @@ public class PlayerController : MonoBehaviour {
 		//cableJoint = GetComponent<FixedJoint>();
 	}
 
-    private void OnDrawGizmosSelected()
-    {
+	private void OnDrawGizmosSelected() {
 		Gizmos.color = Color.green;
 		Gizmos.DrawSphere(transform.TransformPoint(cableLocalConnectionPoint), 0.2f);
-    }
+	}
 
-    void Update() {
-
+	void FixedUpdate() {
 		UpdatePlayerLocation();
 		UpdateCableConnection();
 	}
 
 	private Vector3 cableConnectionPoint => gameObject.transform.TransformPoint(cableLocalConnectionPoint);
 
-	private void UpdatePlayerLocation()
-    {
+	private void UpdatePlayerLocation() {
 		var axisValue = move!.action.ReadValue<Vector2>();
 
 		var displacement = axisValue * moveSpeed;
@@ -57,14 +54,23 @@ public class PlayerController : MonoBehaviour {
 		playerRigibody.velocity = new Vector3(displacement.x, 0, displacement.y) + prevVel;
 
 		var dir = -Vector3.Normalize(playerRigibody.position - newLoc);
-		var newPLayerDir = Vector3.RotateTowards(transform.forward, dir, turnSpeed * Time.deltaTime, 0.0f);
-		transform.rotation = Quaternion.LookRotation(newPLayerDir);
+
+		if (axisValue.magnitude > float.Epsilon) {
+
+			var newAngularVel = Vector3.up * Mathf.Clamp(Vector3.SignedAngle(transform.forward, dir, transform.up), -turnSpeed, turnSpeed);
+			// Debug.LogFormat("New angular Velocity = {0}", newAngularVel);
+
+			playerRigibody.angularVelocity = newAngularVel;
+		} else {
+			playerRigibody.angularVelocity = Vector3.zero;
+		}
+		// var newPLayerDir = Vector3.RotateTowards(transform.forward, dir, turnSpeed * Time.deltaTime, 0.0f);
+		// transform.rotation = Quaternion.LookRotation(newPLayerDir);
 
 		Debug.DrawLine(transform.position, transform.position + transform.forward * 2, Color.red);
 	}
 
-	private void UpdateCableConnection()
-    {
+	private void UpdateCableConnection() {
 		if (grabbedCable == null || cableJoint != null)
 			return;
 
@@ -114,9 +120,9 @@ public class PlayerController : MonoBehaviour {
 		grabbedCable = cable;
 
 		grabbedCable.OnGrab(gameObject);
-		cablesAtRange.Remove(grabbedCable); 
+		cablesAtRange.Remove(grabbedCable);
 		cableStartTime = Time.time;
-	
+
 		grabbedCable.GetComponent<Rigidbody>().position = cableConnectionPoint;
 
 		Debug.Log("Cable grabbed");

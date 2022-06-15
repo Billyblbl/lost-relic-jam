@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 #nullable enable
 
 public class Cable : MonoBehaviour {
@@ -15,15 +19,25 @@ public class Cable : MonoBehaviour {
 	public List<Segment?> Generate() {
 		links = new();
 		if (ressource?.cableSegmentPrefab != null) for (int i = 0; i < segmentCount; i++) {
-			var newLink = Instantiate(ressource.cableSegmentPrefab, transform.position, transform.rotation);
-			newLink.transform.parent = transform;
+
+			Segment newLink;
+			if (Application.isEditor){
+				newLink = ((GameObject)PrefabUtility.InstantiatePrefab(ressource.cableSegmentPrefab.gameObject, transform)).GetComponent<Segment>();
+				newLink.transform.localPosition = Vector3.zero;
+				newLink.transform.localRotation = Quaternion.identity;
+			} else {
+				newLink = Instantiate(ressource.cableSegmentPrefab, transform.position, transform.rotation);
+				newLink.transform.parent = transform;
+			}
 			newLink.transform.localScale = ressource.cableSegmentPrefab.transform.localScale;
 			newLink.gameObject.SetActive(true);
+
 			if (i > 0) {
 				var prev = links[i - 1];
 				var joint = newLink.extremities[0].gameObject.AddComponent<FixedJoint>();
 				joint.gameObject.name = $"Connected extremity {i}";
 				joint.connectedBody = prev?.extremities[1];
+				joint.enablePreprocessing = false;
 			}
 			newLink.gameObject.name = $"Link {i}";
 			links.Add(newLink);
@@ -36,15 +50,20 @@ public class Cable : MonoBehaviour {
 				links[links.Count-1]?.extremities[(links[links.Count-1]?.extremities.Length ?? 1) - 1]!
 			};
 			var plugs = new Plug[2] {
-				Instantiate(ressource.cableEndPrefab, extremities[0]?.transform.position ?? Vector3.zero, extremities[0]?.transform.rotation ?? Quaternion.identity, transform),
-				Instantiate(ressource.cableEndPrefab, extremities[1]?.transform.position ?? Vector3.zero, Quaternion.Euler(180f, 0f, 0f) * (extremities[0]?.transform.rotation ?? Quaternion.identity), transform)
+				((GameObject)PrefabUtility.InstantiatePrefab(ressource.cableEndPrefab.gameObject, transform)).GetComponent<Plug>(),// Instantiate(ressource.cableEndPrefab, extremities[0]?.transform.position ?? Vector3.zero, extremities[0]?.transform.rotation ?? Quaternion.identity, transform),
+				((GameObject)PrefabUtility.InstantiatePrefab(ressource.cableEndPrefab.gameObject, transform)).GetComponent<Plug>()//Instantiate(ressource.cableEndPrefab, extremities[1]?.transform.position ?? Vector3.zero, Quaternion.Euler(180f, 0f, 0f) * (extremities[0]?.transform.rotation ?? Quaternion.identity), transform)
 			};
 
-			plugs[0].joint!.connectedBody = extremities[0];
-			plugs[1].joint!.connectedBody = extremities[1];
+			void InitPlug(Plug plug, Rigidbody extremity, bool upsideDown = false) {
+				plug.transform.position = extremity.transform.position;
+				plug.transform.rotation = (upsideDown ? Quaternion.Euler(180f, 0f, 0f) : Quaternion.identity) * extremity.transform.rotation;
+				plug.joint!.connectedBody = extremity;
+				plug.joint!.enablePreprocessing = false;
+				plug.cable = this;
+			}
 
-			plugs[0].cable = this;
-			plugs[1].cable = this;
+			InitPlug(plugs[0], extremities[0]);
+			InitPlug(plugs[1], extremities[1], upsideDown:true);
 
 			ends.AddRange(plugs);
 		}
