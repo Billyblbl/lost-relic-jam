@@ -9,6 +9,7 @@ public class EncounterManager : MonoBehaviour {
 	public BlendingSprite background;
 	public BlendingSprite foreground;
 	[NonReorderable] public Encounter[] encounters = new Encounter[0];
+	public bool startEncounterOnStart = false;
 	(float start, float end)[] bandwiths = new (float, float)[0];
 	float totalWeights;
 	float lastPing = 0;
@@ -34,6 +35,8 @@ public class EncounterManager : MonoBehaviour {
 			current += encounters[i].weight;
 		}
 		totalWeights = current;
+
+		if (startEncounterOnStart) Ping();
 	}
 
 	private void OnEnable() {
@@ -53,6 +56,17 @@ public class EncounterManager : MonoBehaviour {
 		if (encounter.foregroundSprite != null) foreground.SwitchTo(encounter.foregroundSprite);
 	}
 
+	void Ping() {
+		lastPing = Time.time;
+		Debug.Log("Trying to trigger an encounter");
+		var newEncounter = ChooseRandomEncounter();
+		Debug.LogFormat("Chosen encounter {0}", newEncounter?.gameObject.name);
+		if (newEncounter != null && encounters.All(encounter => !encounter.isActiveAndEnabled || Encounter.IsCompatible(newEncounter, encounter))) {
+			Debug.LogFormat("Triggering encounter {0}", newEncounter.gameObject.name);
+			Trigger(newEncounter);
+		}
+	}
+
 	private void Update() {
 		var active = encounters.Where(e => e.isActiveAndEnabled);
 
@@ -64,15 +78,6 @@ public class EncounterManager : MonoBehaviour {
 		background.UpdateBlend(Time.deltaTime);
 		foreground.UpdateBlend(Time.deltaTime);
 
-		if (Time.time > lastPing + encounterDelay) {
-			lastPing = Time.time;
-			Debug.Log("Trying to trigger an encounter");
-			var newEncounter = ChooseRandomEncounter();
-			Debug.LogFormat("Chosen encounter {0}", newEncounter?.gameObject.name);
-			if (newEncounter != null && encounters.All(encounter => !encounter.isActiveAndEnabled || Encounter.IsCompatible(newEncounter, encounter))) {
-				Debug.LogFormat("Triggering encounter {0}", newEncounter.gameObject.name);
-				Trigger(newEncounter);
-			}
-		}
+		if (Time.time > lastPing + encounterDelay) Ping();
 	}
 }

@@ -5,49 +5,43 @@ using UnityEngine;
 #nullable enable
 
 public class RessourceSystemManager : MonoBehaviour {
-	public enum ShipSystemType { SHIELD, ENGINE, WEAPONS };
 
-	[SerializeField] private ShipSystem? shield;
-	[SerializeField] private ShipSystem? engine;
-	[SerializeField] private ShipSystem? weapons;
-	[SerializeField] private float maxHP = 100;
-
-	[SerializeField] private float hp = 0;
-
-	void Start() {
-		hp = maxHP;
+	[System.Serializable] public struct PerformanceTest {
+		public ShipSystem? target;
+		public float expectedPerformance;
+		public float hpPenalty;
+		public float stressPenalty;
 	}
 
-	private ShipSystem GetSystemByType(ShipSystemType sstype) {
-		ShipSystem res;
+	public ShipSystem[] systems = new ShipSystem[0];
 
-		switch (sstype) {
-			case ShipSystemType.SHIELD:
-				res = shield!;
-				break;
-			case ShipSystemType.ENGINE:
-				res = engine!;
-				break;
-			default:
-				res = weapons!;
-				break;
-		}
+	public Gauge HP;
 
-		return res;
+	private void Update() {
+		HP.Update(Time.time, Time.deltaTime);
 	}
 
 	public void InflictDamage(float dmg) {
-		hp -= Mathf.Clamp(dmg, 0, maxHP);
+		HP.current -= dmg;
 	}
 
-	public void DoPerformanceTest(ShipSystemType ssType, float expectedPerformance, float hpPenalty, float stressPenalty) {
-		var targetedSystem = GetSystemByType(ssType);
-		var targetSystemPerf = targetedSystem.CalcPerformanceLevel();
+	public (float, float) DoPerformanceTest(PerformanceTest test) => DoPerformanceTest(
+		test.target!,
+		test.expectedPerformance,
+		test.hpPenalty,
+		test.stressPenalty
+	);
+
+	public (float, float) DoPerformanceTest(ShipSystem system, float expectedPerformance, float hpPenalty, float stressPenalty) {
+
+		var targetSystemPerf = system.CalcPerformanceLevel();
 
 		var hpCoef = Mathf.Clamp(expectedPerformance - targetSystemPerf / expectedPerformance, 0, 1);
 		var stressCoef = Mathf.Clamp((expectedPerformance * 2) - targetSystemPerf / (expectedPerformance * 2), 0, 1);
 
 		InflictDamage(hpPenalty * hpCoef);
-		targetedSystem.InflictStress(stressPenalty * stressCoef);
+		system.InflictStress(stressPenalty * stressCoef);
+
+		return (hpPenalty * hpCoef, stressPenalty * stressCoef);
 	}
 }
