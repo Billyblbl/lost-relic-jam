@@ -11,6 +11,8 @@ using UnityEditor.IMGUI.Controls;
 
 public class RessourcePort : MonoBehaviour {
 
+	public enum PortFlowDirection { INPUT, OUTPUT }
+
 	private Grabbable? connectedCable = null;
 	Plug? connectedPlug;
 	public FixedJoint? cableJoint;
@@ -21,6 +23,7 @@ public class RessourcePort : MonoBehaviour {
 
 	public Vector3 ejectionDirection = Vector3.right;
 	public Cone ejectionRandomDeviation;
+	public PortFlowDirection flowDirection;
 
 	private void OnDrawGizmos() {
 		Debug.DrawLine(transform.position, gameObject.transform.TransformPoint(new Vector3(1, 0, 0)), Color.red);

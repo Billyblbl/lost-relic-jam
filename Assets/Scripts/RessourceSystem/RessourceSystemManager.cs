@@ -10,6 +10,8 @@ public class RessourceSystemManager : MonoBehaviour {
 	[SerializeField] private ShipSystem? shield;
 	[SerializeField] private ShipSystem? engine;
 	[SerializeField] private ShipSystem? weapons;
+	[SerializeField] private ShipSystem? lifeSupport;
+	[SerializeField] private ShipSystem? bridge;
 	[SerializeField] private float maxHP = 100;
 
 	[SerializeField] private float hp = 0;
