@@ -13,6 +13,12 @@ public class RessourceSystemManager : MonoBehaviour {
 		public float stressPenalty;
 	}
 
+	[SerializeField] private ShipSystem? shield;
+	[SerializeField] private ShipSystem? engine;
+	[SerializeField] private ShipSystem? weapons;
+	[SerializeField] private ShipSystem? lifeSupport;
+	[SerializeField] private ShipSystem? bridge;
+
 	public ShipSystem[] systems = new ShipSystem[0];
 
 	public Gauge HP;
