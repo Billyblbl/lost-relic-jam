@@ -11,10 +11,8 @@ using UnityEditor.IMGUI.Controls;
 
 public class RessourcePort : MonoBehaviour {
 
-	public enum PortFlowDirection { INPUT, OUTPUT }
-
 	private Grabbable? connectedCable = null;
-	Plug? connectedPlug;
+	[HideInInspector] public Plug? connectedPlug;
 	public FixedJoint? cableJoint;
 	[SerializeField] public Ressource? ressType;
 	[SerializeField] private float ejectForce = 10f;
@@ -23,7 +21,7 @@ public class RessourcePort : MonoBehaviour {
 
 	public Vector3 ejectionDirection = Vector3.right;
 	public Cone ejectionRandomDeviation;
-	public PortFlowDirection flowDirection;
+	public Plug.Status flowDirection;
 
 	private void OnDrawGizmos() {
 		Debug.DrawLine(transform.position, gameObject.transform.TransformPoint(new Vector3(1, 0, 0)), Color.red);
@@ -42,6 +40,7 @@ public class RessourcePort : MonoBehaviour {
 		cableJoint!.connectedBody = cable.GetComponent<Rigidbody>();
 		connectedCable.OnGrab(gameObject);
 		connectedPlug = connectedCable.GetComponent<Plug>();
+		connectedPlug.status = flowDirection;
 	}
 
 	public Grabbable? DisconectCable() {
@@ -51,6 +50,7 @@ public class RessourcePort : MonoBehaviour {
 		connectedCable.OnDrop(gameObject);
 		cableJoint!.connectedBody = null;
 		connectedCable = null;
+		connectedPlug!.status = Plug.Status.None;
 		connectedPlug = null;
 
 		return disconectedCable;

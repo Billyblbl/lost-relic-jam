@@ -83,6 +83,7 @@ public class ShipSystem : MonoBehaviour {
 	}
 
 	Vector3Int CalcSystemRessources() => ports
+		.Where(p => p.IsCableConnected && (p.connectedPlug?.providingRessource ?? false))
 		.Select(p => p.ressType?.unit ?? Vector3Int.zero)
 		.Aggregate(Vector3Int.zero, (u1, u2) => u1 + u2);
 

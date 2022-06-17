@@ -1,15 +1,19 @@
 using UnityEngine;
+using System.Linq;
 
 #nullable enable
 
 public class Plug : MonoBehaviour {
 	public Rigidbody? rb;
 	public FixedJoint? joint;
-	public enum PlugStatus {
+	public enum Status {
 		None,
 		Source,
 		System
 	}
-	public PlugStatus plugStatus;
+	public Status status;
 	public Cable? cable;
+
+	public bool providingRessource { get => status == Status.System && cable!.ends.FirstOrDefault(p => p.status == Status.Source) != null; }
+
 }
