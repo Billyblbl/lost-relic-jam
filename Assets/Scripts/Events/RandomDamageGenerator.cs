@@ -18,7 +18,7 @@ public class RandomDamageGenerator : MonoBehaviour {
 	public float impactChance { get => baseImpactChance + (performanceReference != null ? performanceChanceModifier * performanceReference.CalcPerformanceLevel() : 0); }
 
 	private void Update() {
-		if (Random.Range(0f, 1f) * Time.deltaTime > 1f - baseImpactChance) {
+		if (RandomExtension.RandomProba(Time.deltaTime * baseImpactChance)) {
 			RessourceSystemManager.PerformanceTest test = baseTest;
 
 			test.hpPenalty = Random.Range(impactDamageRange.start, impactDamageRange.end);

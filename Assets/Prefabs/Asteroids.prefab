@@ -4912,7 +4912,7 @@ MonoBehaviour:
     hpPenalty: 0
     stressPenalty: 0
   performanceReference: {fileID: 0}
-  performanceChanceModifier: 0
+  performanceChanceModifier: 0.3
 --- !u!114 &6218250022875351164
 MonoBehaviour:
   m_ObjectHideFlags: 0
