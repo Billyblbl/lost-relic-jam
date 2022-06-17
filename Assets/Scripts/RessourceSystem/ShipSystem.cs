@@ -16,6 +16,11 @@ public class ShipSystem : MonoBehaviour {
 	[SerializeField] private Vector3 perfRequierement = new Vector3(1, 1, 1); // X => COOLANT; Y => ENERGY; Z => FUEL
 
 
+	[SerializeField] private List<GameObject> indicatorLights;
+	[SerializeField] private Color minStressColor;
+	[SerializeField] private Color maxStressColor;
+
+
 	[SerializeField] private float stress = 100;
 	float lastEjectTry = 0;
 	float lastReduction = 0;
@@ -31,6 +36,19 @@ public class ShipSystem : MonoBehaviour {
 			Debug.Log("Will Eject !");
 			EjectCableFromRandomPort();
 		}
+		UpdateIndicatorLight();
+
+	}
+
+	void UpdateIndicatorLight()
+    {
+		var stressColor = Color.Lerp(minStressColor, maxStressColor, stress / maxStress);
+		indicatorLights.ForEach(it =>
+		{
+			it.GetComponent<Light>().color = stressColor;
+			it.GetComponent<MeshRenderer>()?.material.SetColor("_EmissionColor", stressColor);
+		});
+	
 	}
 
 	bool ShouldReduceStress() {
