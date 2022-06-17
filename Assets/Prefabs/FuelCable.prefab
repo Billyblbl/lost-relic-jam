@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   segmentCount: 0
-  jointOverlaps: -0.005
+  jointOverlaps: 0.01
   ressource: {fileID: 11400000, guid: d27abf2dd5a40a042b1a0a0a56c3b541, type: 2}
   ends: []
   generate: 0
