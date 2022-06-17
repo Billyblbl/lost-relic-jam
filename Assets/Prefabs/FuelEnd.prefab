@@ -148,7 +148,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 3721872575954510997}
   joint: {fileID: 4946724754490291391}
-  plugStatus: 0
+  status: 0
   cable: {fileID: 0}
 --- !u!114 &8379519933828093066
 MonoBehaviour:
@@ -255,6 +255,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: bd09159a2d4e2c3418b54148082b910b,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3371b05a24a7d96419740ef8fb1739b8, type: 2}
     - target: {fileID: 919132149155446097, guid: bd09159a2d4e2c3418b54148082b910b,
         type: 3}
       propertyPath: m_Name

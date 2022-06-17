@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6762366487712483674
+--- !u!1 &6821026224544023964
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,24 +8,25 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2425992227001141689}
-  - component: {fileID: 7803436505257419352}
-  - component: {fileID: 8095641871437893742}
-  - component: {fileID: 8703600669254437812}
+  - component: {fileID: 2511667567971190143}
+  - component: {fileID: 8014867350218534558}
+  - component: {fileID: 8298049613133012136}
+  - component: {fileID: 8915018373747345266}
+  - component: {fileID: 1094580862045199406}
   m_Layer: 0
-  m_Name: BlackHole
+  m_Name: StarFlares
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2425992227001141689
+--- !u!4 &2511667567971190143
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6762366487712483674}
+  m_GameObject: {fileID: 6821026224544023964}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -34,13 +35,13 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7803436505257419352
+--- !u!114 &8014867350218534558
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6762366487712483674}
+  m_GameObject: {fileID: 6821026224544023964}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dbee9d0dd1836b94dbcbbd6919a87291, type: 3}
@@ -48,34 +49,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weight: 1
   baseDuration: 60
-  backgroundSprite: {fileID: 21300000, guid: 58b403e984054c24aac6c20bfb8b59d0, type: 3}
+  backgroundSprite: {fileID: 21300000, guid: 99f81b5cd18005341977987c2ab02f60, type: 3}
   foregroundSprite: {fileID: 0}
   completion: 0
   OnComplete:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &8095641871437893742
+--- !u!114 &8298049613133012136
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6762366487712483674}
+  m_GameObject: {fileID: 6821026224544023964}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 14f5bb9ab415e5044a8acdac2d2d0d79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  encounter: {fileID: 7803436505257419352}
+  encounter: {fileID: 8014867350218534558}
   performanceReference: {fileID: 0}
   speedFactor: 1
---- !u!114 &8703600669254437812
+--- !u!114 &8915018373747345266
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6762366487712483674}
+  m_GameObject: {fileID: 6821026224544023964}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 773dc8feb41972c469f5a90b674c322d, type: 3}
@@ -83,8 +84,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseImpactChance: 0.8
   impactDamageRange:
-    start: 1
-    end: 2
+    start: 10
+    end: 20
   impactStressRange:
     start: 10
     end: 20
@@ -98,4 +99,20 @@ MonoBehaviour:
     hpPenalty: 0
     stressPenalty: 0
   performanceReference: {fileID: 0}
-  performanceChanceModifier: -0.1
+  performanceChanceModifier: -1
+--- !u!114 &1094580862045199406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6821026224544023964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6538871180cd26442bc53678942091e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frequency: 0.3
+  filter: {fileID: 11400000, guid: 541f5c7c7cf7e354d812af579ce04fcf, type: 2}
+  autoFetch: 0
+  ports: []
