@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 321855217488802492}
   - component: {fileID: 5331629105429891486}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: fast
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25,14 +25,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2807151188098569820}
-  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 35, y: 2.5, z: -80}
-  m_LocalScale: {x: 0.6439109, y: 0.6439109, z: 0.6439109}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -70, y: 28.3, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4568781405516243122}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!198 &321855217488802492
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -4838,6 +4838,7 @@ GameObject:
   - component: {fileID: 4568781405516243122}
   - component: {fileID: 8252328725569899347}
   - component: {fileID: 8784986772235955323}
+  - component: {fileID: 6218250022875351164}
   m_Layer: 0
   m_Name: Asteroids
   m_TagString: Untagged
@@ -4875,7 +4876,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weight: 1
-  baseDuration: 20
+  baseDuration: 60
   backgroundSprite: {fileID: 0}
   foregroundSprite: {fileID: 21300000, guid: 0814873e0a342ed4aa638e836ac3be5e, type: 3}
   completion: 0
@@ -4894,7 +4895,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 773dc8feb41972c469f5a90b674c322d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  impactChance: 0.5
+  baseImpactChance: 0.5
   impactDamageRange:
     start: 5
     end: 10
@@ -4910,6 +4911,23 @@ MonoBehaviour:
     expectedPerformance: 1
     hpPenalty: 0
     stressPenalty: 0
+  performanceReference: {fileID: 0}
+  performanceChanceModifier: 0
+--- !u!114 &6218250022875351164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4833920498866610257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14f5bb9ab415e5044a8acdac2d2d0d79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  encounter: {fileID: 8252328725569899347}
+  performanceReference: {fileID: 0}
+  speedFactor: 1
 --- !u!1 &5472454228964352264
 GameObject:
   m_ObjectHideFlags: 0
@@ -4922,7 +4940,7 @@ GameObject:
   - component: {fileID: 146159227243084579}
   - component: {fileID: 8757678438927449422}
   m_Layer: 0
-  m_Name: GameObject (1)
+  m_Name: slow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4935,14 +4953,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5472454228964352264}
-  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 10.35, y: 2.5, z: -80}
-  m_LocalScale: {x: 1.2878218, y: 1.2878218, z: 1.2878218}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -70, y: 0, z: 0}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4568781405516243122}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!198 &146159227243084579
 ParticleSystem:
   m_ObjectHideFlags: 0

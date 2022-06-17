@@ -19,7 +19,7 @@ public class EncounterManager : MonoBehaviour {
 	private void OnValidate() {
 		if (!autoFetchEncountersInChildren) return;
 
-		encounters = GetComponentsInChildren<Encounter>()
+		encounters = GetComponentsInChildren<Encounter>(includeInactive:true)
 			.Where(e => !encounters.Contains(e))
 			.Concat(encounters)
 			.Where(e => e != null)

@@ -15,19 +15,19 @@ public class Encounter : MonoBehaviour {
 
 	public static bool IsCompatible(Encounter a, Encounter b) => (a.backgroundSprite == null || b.backgroundSprite == null) && (a.foregroundSprite == null || b.foregroundSprite == null);
 
-	// TODO make this dependant in some way on ship system performances
-	float performanceMultiplier = 1f;
-
 	private void OnEnable() {
 		completion = 0f;
 	}
 
+	public float TimeToCompletion(float dt) => Mathf.InverseLerp(0, baseDuration, dt);
+
 	private void Update() {
-		completion += Mathf.InverseLerp(0, baseDuration, Time.deltaTime * performanceMultiplier);
+		completion += TimeToCompletion(Time.deltaTime);
 		if (completion >= 1) {
 			OnComplete?.Invoke(this);
 			gameObject.SetActive(false);
 		}
+		completion = Mathf.Clamp01(completion);
 	}
 
 }
