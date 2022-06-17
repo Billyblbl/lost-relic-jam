@@ -16,7 +16,7 @@ public class ShipSystem : MonoBehaviour {
 	[SerializeField] private Vector3 perfRequierement = new Vector3(1, 1, 1); // X => COOLANT; Y => ENERGY; Z => FUEL
 
 
-	[SerializeField] private List<GameObject> indicatorLights;
+	[SerializeField] private List<GameObject> indicatorLights = new();
 	[SerializeField] private Color minStressColor;
 	[SerializeField] private Color maxStressColor;
 
