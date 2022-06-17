@@ -10407,10 +10407,40 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5637720545675171892, guid: 0a2e76fa9633838408805aec70a93879,
+        type: 3}
+      propertyPath: weight
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5922000125480757762, guid: 0a2e76fa9633838408805aec70a93879,
+        type: 3}
+      propertyPath: performanceReference
+      value: 
+      objectReference: {fileID: 980338894}
     - target: {fileID: 6296875356254488597, guid: 0a2e76fa9633838408805aec70a93879,
         type: 3}
       propertyPath: EmissionModule.rateOverTime.scalar
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6539000635030745560, guid: 0a2e76fa9633838408805aec70a93879,
+        type: 3}
+      propertyPath: manager
+      value: 
+      objectReference: {fileID: 442343008}
+    - target: {fileID: 6539000635030745560, guid: 0a2e76fa9633838408805aec70a93879,
+        type: 3}
+      propertyPath: baseTest.target
+      value: 
+      objectReference: {fileID: 980338894}
+    - target: {fileID: 6539000635030745560, guid: 0a2e76fa9633838408805aec70a93879,
+        type: 3}
+      propertyPath: performanceReference
+      value: 
+      objectReference: {fileID: 980338894}
+    - target: {fileID: 6539000635030745560, guid: 0a2e76fa9633838408805aec70a93879,
+        type: 3}
+      propertyPath: performanceChanceModifier
+      value: -0.2
       objectReference: {fileID: 0}
     - target: {fileID: 6865070992870078581, guid: 0a2e76fa9633838408805aec70a93879,
         type: 3}
@@ -10441,6 +10471,11 @@ PrefabInstance:
         type: 3}
       propertyPath: EmissionModule.rateOverTime.scalar
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7986573068790076279, guid: 0a2e76fa9633838408805aec70a93879,
+        type: 3}
+      propertyPath: weight
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 8061563714170490288, guid: 0a2e76fa9633838408805aec70a93879,
         type: 3}
