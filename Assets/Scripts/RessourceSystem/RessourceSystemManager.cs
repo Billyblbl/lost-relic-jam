@@ -15,7 +15,8 @@ public class RessourceSystemManager : MonoBehaviour {
 
 	[SerializeField] private ShipSystem? shield;
 	[SerializeField] private ShipSystem? engine;
-	[SerializeField] private ShipSystem? weapons;
+	[SerializeField] private ShipSystem? weapon;
+	[SerializeField] private ShipSystem? energyWeapon;
 	[SerializeField] private ShipSystem? lifeSupport;
 	[SerializeField] private ShipSystem? bridge;
 

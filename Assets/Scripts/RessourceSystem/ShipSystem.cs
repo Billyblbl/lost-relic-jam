@@ -28,7 +28,7 @@ public class ShipSystem : MonoBehaviour {
 	void Update() {
 
 		if (ShouldReduceStress()) {
-			Debug.Log("Will Reduce stress !");
+			Debug.LogFormat("{0}: Will Reduce stress ! reduction: {1}", gameObject.name, baseStressReduction * -CalcPerformanceLevel());
 			InflictStress(baseStressReduction * -CalcPerformanceLevel());
 		}
 
@@ -99,5 +99,6 @@ public class ShipSystem : MonoBehaviour {
 
 	public void InflictStress(float stressDmg) {
 		stress = Mathf.Clamp(stress + stressDmg, 0, maxStress);
+		Debug.LogFormat("{0}: stress new stress {1} ({2})", gameObject.name, stress, stressDmg);
 	}
 }
