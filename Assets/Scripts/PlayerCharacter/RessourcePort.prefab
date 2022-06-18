@@ -129,6 +129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa019d9b1fbf9f14d86814a2a36882a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  connectedPlug: {fileID: 0}
   cableJoint: {fileID: 285367026500007713}
   ressType: {fileID: 0}
   ejectForce: 2
@@ -138,6 +139,9 @@ MonoBehaviour:
     radius: 0.7472183
     angle: 88.43996
   flowDirection: 0
+  cableConnectDistance: 0.1
+  cableConnectTime: 0.5
+  cableConnectSpeed: 20
 --- !u!54 &968816892
 Rigidbody:
   m_ObjectHideFlags: 0
