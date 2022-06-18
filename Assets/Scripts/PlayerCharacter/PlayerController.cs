@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour {
 
 	private void Awake() {
 		playerRigibody = GetComponent<Rigidbody>();
-		grab!.action.performed += HandleGrabAction;
+		// grab!.action.performed += HandleGrabAction;
 		//cableJoint = GetComponent<FixedJoint>();
 	}
 
@@ -46,6 +46,8 @@ public class PlayerController : MonoBehaviour {
 	private Vector3 cableConnectionPoint => gameObject.transform.TransformPoint(cableLocalConnectionPoint);
 
 	private void UpdatePlayerLocation() {
+		if (grab!.action.triggered) HandleGrabAction();
+
 		var axisValue = move!.action.ReadValue<Vector2>();
 
 		var displacement = axisValue * moveSpeed;
@@ -216,7 +218,7 @@ public class PlayerController : MonoBehaviour {
 		return TryGrabCable(GetClosetCableAtRange()!);
 	}
 
-	private void HandleGrabAction(InputAction.CallbackContext ctx) {
+	private void HandleGrabAction() {
 		if (HandlePortAction()) return;
 		HandleCableAction();
 	}
