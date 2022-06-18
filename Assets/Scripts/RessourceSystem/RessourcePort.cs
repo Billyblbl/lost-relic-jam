@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -16,12 +17,13 @@ public class RessourcePort : MonoBehaviour {
 	public FixedJoint? cableJoint;
 	[SerializeField] public Ressource? ressType;
 	[SerializeField] private float ejectForce = 10f;
-
 	public Transform? plugTransform;
-
 	public Vector3 ejectionDirection = Vector3.right;
 	public Cone ejectionRandomDeviation;
 	public Plug.Status flowDirection;
+
+	public UnityEvent	OnInteract = new();
+	public UnityEvent	OnEject = new();
 
 	public float cableConnectDistance = 0.1f;
 	private float cableStartTime = 0f;
@@ -65,6 +67,7 @@ public class RessourcePort : MonoBehaviour {
 	public void ConnectCable(Grabbable cable) {
 		Debug.Log("connecting cable !");
 		connectedCable = cable;
+		OnInteract?.Invoke();
 		connectedCable.transform.rotation = plugTransform?.rotation ?? transform.rotation;
 		connectedCable.transform.localScale = plugTransform?.localScale ?? transform.localScale;
 		connectedCable.OnGrab(gameObject);
@@ -74,6 +77,7 @@ public class RessourcePort : MonoBehaviour {
 
 	public Grabbable? DisconectCable() {
 		if (connectedCable == null) return null;
+		OnInteract?.Invoke();
 		Debug.Log("disconnecting cable !");
 		var disconectedCable = connectedCable;
 		connectedCable.OnDrop(gameObject);
@@ -87,6 +91,8 @@ public class RessourcePort : MonoBehaviour {
 
 	public void EjectCable() {
 		var cable = DisconectCable();
+
+		OnEject?.Invoke();
 
 		var deviationAngles = Random.insideUnitCircle * ejectionRandomDeviation.angle;
 		var deviation = Quaternion.Euler(deviationAngles);

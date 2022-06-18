@@ -5149,57 +5149,57 @@ PrefabInstance:
         type: 3}
       propertyPath: ports.Array.data[0]
       value: 
-      objectReference: {fileID: 1538614689}
+      objectReference: {fileID: 238368434}
     - target: {fileID: 6156366176814538699, guid: 0a2e76fa9633838408805aec70a93879,
         type: 3}
       propertyPath: ports.Array.data[1]
       value: 
-      objectReference: {fileID: 780356555}
+      objectReference: {fileID: 287186028}
     - target: {fileID: 6156366176814538699, guid: 0a2e76fa9633838408805aec70a93879,
         type: 3}
       propertyPath: ports.Array.data[2]
       value: 
-      objectReference: {fileID: 1691321499}
+      objectReference: {fileID: 368677477}
     - target: {fileID: 6156366176814538699, guid: 0a2e76fa9633838408805aec70a93879,
         type: 3}
       propertyPath: ports.Array.data[3]
       value: 
-      objectReference: {fileID: 368677477}
+      objectReference: {fileID: 484558488}
     - target: {fileID: 6156366176814538699, guid: 0a2e76fa9633838408805aec70a93879,
         type: 3}
       propertyPath: ports.Array.data[4]
       value: 
-      objectReference: {fileID: 238368434}
+      objectReference: {fileID: 780356555}
     - target: {fileID: 6156366176814538699, guid: 0a2e76fa9633838408805aec70a93879,
         type: 3}
       propertyPath: ports.Array.data[5]
       value: 
-      objectReference: {fileID: 287186028}
+      objectReference: {fileID: 937211866}
     - target: {fileID: 6156366176814538699, guid: 0a2e76fa9633838408805aec70a93879,
         type: 3}
       propertyPath: ports.Array.data[6]
       value: 
-      objectReference: {fileID: 484558488}
+      objectReference: {fileID: 1144200836}
     - target: {fileID: 6156366176814538699, guid: 0a2e76fa9633838408805aec70a93879,
         type: 3}
       propertyPath: ports.Array.data[7]
       value: 
-      objectReference: {fileID: 937211866}
+      objectReference: {fileID: 1358549007}
     - target: {fileID: 6156366176814538699, guid: 0a2e76fa9633838408805aec70a93879,
         type: 3}
       propertyPath: ports.Array.data[8]
       value: 
-      objectReference: {fileID: 1144200836}
+      objectReference: {fileID: 1538614689}
     - target: {fileID: 6156366176814538699, guid: 0a2e76fa9633838408805aec70a93879,
         type: 3}
       propertyPath: ports.Array.data[9]
       value: 
-      objectReference: {fileID: 1358549007}
+      objectReference: {fileID: 1667765978}
     - target: {fileID: 6156366176814538699, guid: 0a2e76fa9633838408805aec70a93879,
         type: 3}
       propertyPath: ports.Array.data[10]
       value: 
-      objectReference: {fileID: 1667765978}
+      objectReference: {fileID: 1691321499}
     - target: {fileID: 6296875356254488597, guid: 0a2e76fa9633838408805aec70a93879,
         type: 3}
       propertyPath: EmissionModule.rateOverTime.scalar
@@ -11803,7 +11803,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shield: {fileID: 2038463765}
   engine: {fileID: 980338894}
-  weapons: {fileID: 2055896251}
+  weapon: {fileID: 0}
+  energyWeapon: {fileID: 0}
   lifeSupport: {fileID: 1828943958}
   bridge: {fileID: 619788188}
   systems: []
