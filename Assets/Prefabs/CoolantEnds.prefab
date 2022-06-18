@@ -148,7 +148,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 3721872575954510997}
   joint: {fileID: 4946724754490291391}
-  plugStatus: 0
+  status: 0
   cable: {fileID: 0}
 --- !u!114 &8379519933828093066
 MonoBehaviour:
@@ -176,7 +176,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.75
+  m_Radius: 1
   m_Center: {x: 0, y: -0.15, z: 0}
 --- !u!1001 &6495672544946094852
 PrefabInstance:

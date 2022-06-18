@@ -23,21 +23,50 @@ public class RessourcePort : MonoBehaviour {
 	public Cone ejectionRandomDeviation;
 	public Plug.Status flowDirection;
 
+	public float cableConnectDistance = 0.1f;
+	private float cableStartTime = 0f;
+	public float cableConnectTime = 0.5f;
+	public float cableConnectSpeed = 20f;
+
 	private void OnDrawGizmos() {
 		Debug.DrawLine(transform.position, gameObject.transform.TransformPoint(new Vector3(1, 0, 0)), Color.red);
 	}
 
-	public bool IsCableConnected => connectedCable != null;
+    private void Update()
+    {
+		UpdateCable();
+
+	}
+
+	private void UpdateCable()
+    {
+		if (connectedCable == null || cableJoint!.connectedBody != null)
+			return;
+
+		var cableRigibody = connectedCable.GetComponent<Rigidbody>();
+		var targetCablePlugPoint = plugTransform?.position ?? transform.position;
+		var cableDistance = Vector3.Distance(connectedCable.transform.position, targetCablePlugPoint);
+
+		if (cableDistance < cableConnectDistance)
+		{
+			cableJoint!.connectedBody = connectedCable.GetComponent<Rigidbody>();
+			return;
+		}
+
+		var nextPos = Vector3.Lerp(connectedCable.transform.position, targetCablePlugPoint, (Time.time - cableStartTime) / cableConnectTime);
+		var nextVel = Vector3.Normalize(nextPos - cableRigibody.position);
+		cableRigibody.velocity = nextVel * cableConnectSpeed;
+	}
+
+    public bool IsCableConnected => connectedCable != null;
 
 	public bool CanConnectCable => connectedCable == null;
 
 	public void ConnectCable(Grabbable cable) {
 		Debug.Log("connecting cable !");
 		connectedCable = cable;
-		connectedCable.transform.position = plugTransform?.position ?? transform.position;
 		connectedCable.transform.rotation = plugTransform?.rotation ?? transform.rotation;
 		connectedCable.transform.localScale = plugTransform?.localScale ?? transform.localScale;
-		cableJoint!.connectedBody = cable.GetComponent<Rigidbody>();
 		connectedCable.OnGrab(gameObject);
 		connectedPlug = connectedCable.GetComponent<Plug>();
 		connectedPlug.status = flowDirection;
