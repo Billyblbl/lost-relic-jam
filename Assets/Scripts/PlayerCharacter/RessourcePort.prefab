@@ -117,8 +117,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.52752304, y: 0.99006647, z: 0.4526795}
-  m_Center: {x: 0.7637615, y: -0.0049667656, z: -0.06473768}
+  m_Size: {x: 0.6147579, y: 0.99006647, z: 0.5038628}
+  m_Center: {x: 0.6684882, y: -0.004966776, z: -0.07332345}
 --- !u!114 &3031501164769570374
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -174,6 +174,7 @@ MonoBehaviour:
   cableConnectDistance: 0.1
   cableConnectTime: 0.5
   cableConnectSpeed: 20
+  portArrow: {fileID: 8497096904780402347}
 --- !u!54 &968816892
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -510,6 +511,11 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 95a822ef48f97ef4e9871595fbf1b60b,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: bf5f9127e4b36884794c2859c84cbde6, type: 2}
     - target: {fileID: 919132149155446097, guid: 95a822ef48f97ef4e9871595fbf1b60b,
         type: 3}
       propertyPath: m_Name
@@ -520,6 +526,12 @@ PrefabInstance:
 --- !u!4 &7323112758753244612 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 95a822ef48f97ef4e9871595fbf1b60b,
+    type: 3}
+  m_PrefabInstance: {fileID: 7073559882353562159}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &8497096904780402347 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 95a822ef48f97ef4e9871595fbf1b60b,
     type: 3}
   m_PrefabInstance: {fileID: 7073559882353562159}
   m_PrefabAsset: {fileID: 0}

@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour {
 		playerRigibody = GetComponent<Rigidbody>();
 		// grab!.action.performed += HandleGrabAction;
 		//cableJoint = GetComponent<FixedJoint>();
+		grab!.action.performed += HandleGrabAction;
 	}
 
 	private void OnDrawGizmosSelected() {
@@ -43,11 +44,11 @@ public class PlayerController : MonoBehaviour {
 		UpdateCableConnection();
 	}
 
-	private Vector3 cableConnectionPoint => gameObject.transform.TransformPoint(cableLocalConnectionPoint);
+    private Vector3 cableConnectionPoint => gameObject.transform.TransformPoint(cableLocalConnectionPoint);
 
 	private void UpdatePlayerLocation() {
-		if (grab!.action.triggered) HandleGrabAction();
 
+		//if (grab!.action.triggered) HandleGrabAction();
 		var axisValue = move!.action.ReadValue<Vector2>();
 
 		var displacement = axisValue * moveSpeed;
@@ -217,6 +218,11 @@ public class PlayerController : MonoBehaviour {
 
 		return TryGrabCable(GetClosetCableAtRange()!);
 	}
+
+	private void HandleGrabAction(InputAction.CallbackContext ctx)
+    {
+		HandleGrabAction();
+    }
 
 	private void HandleGrabAction() {
 		if (HandlePortAction()) return;

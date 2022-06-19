@@ -30,6 +30,14 @@ public class RessourcePort : MonoBehaviour {
 	public float cableConnectTime = 0.5f;
 	public float cableConnectSpeed = 20f;
 
+   [SerializeField] private MeshRenderer portArrow;
+	private Material arrowMat;
+
+    private void Awake()
+    {
+        arrowMat = portArrow.material;
+	}
+
 	private void OnDrawGizmos() {
 		Debug.DrawLine(transform.position, gameObject.transform.TransformPoint(new Vector3(1, 0, 0)), Color.red);
 	}
@@ -37,7 +45,8 @@ public class RessourcePort : MonoBehaviour {
     private void Update()
     {
 		UpdateCable();
-
+		if (IsCableConnected) arrowMat.SetColor("_EmissionColor", new Color(0.25f, 0.25f, 0.25f, 1));
+        else arrowMat.SetColor("_EmissionColor", Color.black);
 	}
 
 	private void UpdateCable()

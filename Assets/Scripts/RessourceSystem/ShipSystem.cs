@@ -13,7 +13,7 @@ public class ShipSystem : MonoBehaviour {
 	[SerializeField] private float baseStressReduction = 5f;
 	[SerializeField] private float stressReductionTimeout = 1f;
 	[SerializeField] private List<RessourcePort> ports = new();
-	[SerializeField] private Vector3 perfRequierement = new Vector3(1, 1, 1); // X => COOLANT; Y => ENERGY; Z => FUEL
+	[SerializeField] private Vector3 perfRequierement = new Vector3(1, 1, 1); //X => ENERGY ; Y => FUEL;Z => COOLANT
 
 
 	[SerializeField] private List<GameObject> indicatorLights = new();
@@ -37,6 +37,7 @@ public class ShipSystem : MonoBehaviour {
 			EjectCableFromRandomPort();
 		}
 		UpdateIndicatorLight();
+		Debug.LogFormat("{0}: performance: {1}", gameObject.name, CalcPerformanceLevel());
 
 	}
 
@@ -90,11 +91,20 @@ public class ShipSystem : MonoBehaviour {
 	// TODO check with alex for this calculation
 	public float CalcPerformanceLevel() {
 		var systemRessources = CalcSystemRessources();
-		return (
-			(systemRessources.x / perfRequierement.x) +
-			(systemRessources.y / perfRequierement.y) +
-			(systemRessources.z / perfRequierement.z)
-		) / 3;
+		Debug.LogFormat("{0}: systemRessources : {1}", gameObject.name, systemRessources);
+
+		var nRequieredRessources = (perfRequierement.x != 0 ? perfRequierement.x : 0) +
+			(perfRequierement.y != 0 ? perfRequierement.y : 0) +
+			(perfRequierement.z != 0 ? perfRequierement.z : 0);
+		if (nRequieredRessources == 0) return 0;
+
+		var energyPerfs = perfRequierement.x != 0 ? systemRessources.x / perfRequierement.x : 0;
+		var fuelPerfs = perfRequierement.y != 0 ? systemRessources.y / perfRequierement.y : 0;
+		var coolantPerfs = perfRequierement.z != 0 ? systemRessources.z / perfRequierement.z : 0;
+
+		Debug.LogFormat("{0}: perfs : {1} {2} {3} / {4}", gameObject.name, energyPerfs, fuelPerfs, coolantPerfs, nRequieredRessources);
+
+		return (energyPerfs + fuelPerfs + coolantPerfs) / nRequieredRessources;
 	}
 
 	public void InflictStress(float stressDmg) {
