@@ -18,6 +18,7 @@ public class Cable : MonoBehaviour {
 
 	public List<Segment?> Generate() {
 		links = new();
+#if UNITY_EDITOR
 		if (ressource?.cableSegmentPrefab != null) for (int i = 0; i < segmentCount; i++) {
 
 			Segment newLink;
@@ -67,7 +68,7 @@ public class Cable : MonoBehaviour {
 
 			ends.AddRange(plugs);
 		}
-
+#endif
 		return links;
 	}
 
