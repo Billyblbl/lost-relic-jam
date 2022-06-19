@@ -22,35 +22,32 @@ public class RessourcePort : MonoBehaviour {
 	public Cone ejectionRandomDeviation;
 	public Plug.Status flowDirection;
 
-	public UnityEvent	OnInteract = new();
-	public UnityEvent	OnEject = new();
+	public UnityEvent OnInteract = new();
+	public UnityEvent OnEject = new();
 
 	public float cableConnectDistance = 0.1f;
 	private float cableStartTime = 0f;
 	public float cableConnectTime = 0.5f;
 	public float cableConnectSpeed = 20f;
 
-   [SerializeField] private MeshRenderer portArrow;
-	private Material arrowMat;
+	[SerializeField] private MeshRenderer? portArrow;
+	private Material? arrowMat;
 
-    private void Awake()
-    {
-        arrowMat = portArrow.material;
+	private void Awake() {
+		arrowMat = portArrow?.material;
 	}
 
 	private void OnDrawGizmos() {
 		Debug.DrawLine(transform.position, gameObject.transform.TransformPoint(new Vector3(1, 0, 0)), Color.red);
 	}
 
-    private void Update()
-    {
+	private void Update() {
 		UpdateCable();
-		if (IsCableConnected) arrowMat.SetColor("_EmissionColor", new Color(0.25f, 0.25f, 0.25f, 1));
-        else arrowMat.SetColor("_EmissionColor", Color.black);
+		if (IsCableConnected) arrowMat?.SetColor("_EmissionColor", new Color(0.25f, 0.25f, 0.25f, 1));
+		else arrowMat?.SetColor("_EmissionColor", Color.black);
 	}
 
-	private void UpdateCable()
-    {
+	private void UpdateCable() {
 		if (connectedCable == null || cableJoint!.connectedBody != null)
 			return;
 
@@ -58,8 +55,7 @@ public class RessourcePort : MonoBehaviour {
 		var targetCablePlugPoint = plugTransform?.position ?? transform.position;
 		var cableDistance = Vector3.Distance(connectedCable.transform.position, targetCablePlugPoint);
 
-		if (cableDistance < cableConnectDistance)
-		{
+		if (cableDistance < cableConnectDistance) {
 			cableJoint!.connectedBody = connectedCable.GetComponent<Rigidbody>();
 			return;
 		}
@@ -69,7 +65,7 @@ public class RessourcePort : MonoBehaviour {
 		cableRigibody.velocity = nextVel * cableConnectSpeed;
 	}
 
-    public bool IsCableConnected => connectedCable != null;
+	public bool IsCableConnected => connectedCable != null;
 
 	public bool CanConnectCable => connectedCable == null;
 
